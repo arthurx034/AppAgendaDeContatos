@@ -1,34 +1,44 @@
 package com.arthur.agendadecontatos.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaContatos {
+/**
+ * Classe de modelo para armazenar listas de contatos em memória.
+ */
+public class Lista {
     private ArrayList<String> nomes;
     private ArrayList<String> sobrenomes;
     private ArrayList<String> paises;
-    private ArrayList<Integer> telefones;
+    private ArrayList<String> telefones;
 
-    public ListaContatos() {
+    public Lista() {
         nomes = new ArrayList<>();
         sobrenomes = new ArrayList<>();
         paises = new ArrayList<>();
         telefones = new ArrayList<>();
     }
 
-    public void adicionarContato(String nome, int telefone, String sobrenome, String pais) {
+    /**
+     * Adiciona um novo contato à lista.
+     */
+    public void adicionarContato(String nome, String telefone, String sobrenome, String pais) {
         nomes.add(nome);
         sobrenomes.add(sobrenome);
         paises.add(pais);
         telefones.add(telefone);
     }
 
+    /**
+     * Remove o contato pelo índice.
+     */
     public void removerContato(int indice) {
-        nomes.remove(indice);
-        sobrenomes.remove(indice);
-        paises.remove(indice);
-        telefones.remove(indice);
+        if (indice >= 0 && indice < nomes.size()) {
+            nomes.remove(indice);
+            sobrenomes.remove(indice);
+            paises.remove(indice);
+            telefones.remove(indice);
+        }
     }
 
     public List<String> getNomes() {
@@ -43,7 +53,7 @@ public class ListaContatos {
         return paises;
     }
 
-    public List<Integer> getTelefones() {
+    public List<String> getTelefones() {
         return telefones;
     }
 
@@ -63,7 +73,7 @@ public class ListaContatos {
         this.paises = paises;
     }
 
-    public void setTelefones(ArrayList<Integer> telefones) {
+    public void setTelefones(ArrayList<String> telefones) {
         this.telefones = telefones;
     }
 }

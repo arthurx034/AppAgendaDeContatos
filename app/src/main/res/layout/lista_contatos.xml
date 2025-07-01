@@ -6,14 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.MainActivity">
+    android:padding="8dp">
 
+    <!-- Topo: Botão Voltar + Texto + Busca -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="8dp">
 
         <ImageButton
             android:id="@+id/imagemBack"
@@ -25,56 +27,51 @@
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="23dp"
+            android:id="@+id/textViewVoltar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingStart="8dp"
             android:text="Voltar"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <ImageButton
             android:id="@+id/imagemSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:background="@null"
+            android:contentDescription="Buscar"
             android:src="@drawable/search"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
     </LinearLayout>
 
+    <!-- Campo de Busca -->
+    <EditText
+        android:id="@+id/editTextBuscar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edittext_borda"
+        android:hint="Buscar"
+        android:inputType="text"
+        android:paddingHorizontal="12dp"
+        android:textColorHint="@color/gray"
+        android:visibility="gone" />
+
+    <!-- Título + Botão Adicionar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/editTextText"
-            android:layout_width="380dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/edittext_borda"
-            android:ems="10"
-            android:hint="Buscar"
-            android:inputType="text"
-            android:textColorHint="@color/gray"
-            android:visibility="gone" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:paddingStart="20dp"
             android:text="Contatos"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -83,18 +80,19 @@
             android:id="@+id/fabAdicionar"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="1.25in"
+            android:layout_marginEnd="20dp"
             android:background="@null"
+            android:contentDescription="Adicionar Contato"
             android:elevation="8dp"
             android:src="@drawable/add_pessoa"
             tools:ignore="SpeakableTextPresentCheck" />
-
     </LinearLayout>
 
+    <!-- Lista de Contatos -->
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
