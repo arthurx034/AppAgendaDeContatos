@@ -15,16 +15,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.arthur.agendadecontatos.R;
 import com.arthur.agendadecontatos.controller.DBController;
+import com.arthur.agendadecontatos.model.Contato;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 public class ListaContatos extends AppCompatActivity {
 
-    private ArrayList<String> nomes = new ArrayList<>();
+    private List<Contato> listaContatos = new ArrayList<>(); // Lista real de contatos
+    private ArrayList<String> nomes = new ArrayList<>();    // Lista de nomes para mostrar no adapter
     private ArrayAdapter<String> adapter;
     private EditText editTextBuscar;
-    private static final int REQUEST_ADICIONAR_CONTATO = 1;
+    private ListView listView;
+
+    private DBController dbController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,41 +38,29 @@ public class ListaContatos extends AppCompatActivity {
         ImageButton fabAdicionar = findViewById(R.id.fabAdicionar);
         ImageButton imagemBack = findViewById(R.id.imagemBack);
         ImageButton imagemSearch = findViewById(R.id.imagemSearch);
-        ListView listView = findViewById(R.id.listView);
         editTextBuscar = findViewById(R.id.editTextBuscar);
+        listView = findViewById(R.id.listView);
         TextView textViewVoltar = findViewById(R.id.textViewVoltar);
 
+        dbController = new DBController(this);
 
-        DBController dbController = new DBController(this);
-        nomes = dbController.listarContatos(); // contatos do banco
+        // Inicializa o adapter com a lista vazia
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nomes);
         listView.setAdapter(adapter);
 
+        carregarContatos(); // carrega a lista inicial
 
-        // Exemplo: adicionar nomes para teste
-
-        // Ordenar os nomes
-        Collections.sort(nomes);
-
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nomes);
-        listView.setAdapter(adapter);
-
-        // Botão para abrir a tela de adicionar contato
         fabAdicionar.setOnClickListener(v -> {
             Intent intent = new Intent(ListaContatos.this, AdicionarContato.class);
-            startActivityForResult(intent, REQUEST_ADICIONAR_CONTATO);
+            startActivity(intent);
         });
 
-        // Botão de voltar
         imagemBack.setOnClickListener(v -> finish());
-
         textViewVoltar.setOnClickListener(v -> finish());
 
-        // Mostrar/ocultar campo de busca
         imagemSearch.setOnClickListener(v -> {
             if (editTextBuscar.getVisibility() == View.VISIBLE) {
                 editTextBuscar.setVisibility(View.GONE);
-                // Limpa filtro quando esconde o campo
                 editTextBuscar.setText("");
                 adapter.getFilter().filter("");
             } else {
@@ -77,7 +69,6 @@ public class ListaContatos extends AppCompatActivity {
             }
         });
 
-        // Filtrar lista enquanto digita
         editTextBuscar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -94,23 +85,25 @@ public class ListaContatos extends AppCompatActivity {
         });
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
+            Contato contatoSelecionado = listaContatos.get(position); // Agora existe!
             Intent intent = new Intent(ListaContatos.this, EditarContato.class);
-            intent.putExtra("nome", nomes.get(position));
+            intent.putExtra("idContato", contatoSelecionado.getId());
             startActivity(intent);
         });
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onResume() {
+        super.onResume();
+        carregarContatos(); // Recarrega a lista sempre que a activity voltar
+    }
 
-        if (requestCode == REQUEST_ADICIONAR_CONTATO && resultCode == RESULT_OK) {
-            String novoContato = data.getStringExtra("novoContato");
-            if (novoContato != null && !novoContato.isEmpty()) {
-                nomes.add(novoContato);
-                Collections.sort(nomes); // mantém ordem alfabética
-                adapter.notifyDataSetChanged();
-            }
+    private void carregarContatos() {
+        listaContatos = dbController.listarContatos();  // pega a lista real
+        nomes.clear();
+        for (Contato c : listaContatos) {
+            nomes.add(c.getNome() + " " + c.getSobrenome());
         }
+        adapter.notifyDataSetChanged();
     }
 }
