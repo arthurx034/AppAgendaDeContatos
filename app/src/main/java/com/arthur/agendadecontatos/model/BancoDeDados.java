@@ -24,10 +24,10 @@ public class BancoDeDados extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE " + TABELA_CONTATOS + " (" +
                 COLUNA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUNA_NOME + " TEXT, " +
-                COLUNA_SOBRENOME + " TEXT, " +
-                COLUNA_TELEFONE + " TEXT, " +
-                COLUNA_PAIS + " TEXT)";
+                COLUNA_NOME + " TEXT NOT NULL, " +
+                COLUNA_SOBRENOME + " TEXT NOT NULL, " +
+                COLUNA_TELEFONE + " TEXT NOT NULL, " +
+                COLUNA_PAIS + " TEXT NOT NULL)";
         db.execSQL(sql);
     }
 

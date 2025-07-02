@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.arthur.agendadecontatos.model.BancoDeDados;
+import com.arthur.agendadecontatos.model.Contato;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBController {
     private final SQLiteDatabase db;
@@ -17,18 +19,18 @@ public class DBController {
         db = banco.getWritableDatabase();
     }
 
-    public void adicionarContato(String nome, String sobrenome, String telefone, String pais) {
+    public void adicionarContato(Contato contato) {
         ContentValues valores = new ContentValues();
-        valores.put(BancoDeDados.COLUNA_NOME, nome);
-        valores.put(BancoDeDados.COLUNA_SOBRENOME, sobrenome);
-        valores.put(BancoDeDados.COLUNA_TELEFONE, telefone);
-        valores.put(BancoDeDados.COLUNA_PAIS, pais);
+        valores.put(BancoDeDados.COLUNA_NOME, contato.getNome());
+        valores.put(BancoDeDados.COLUNA_SOBRENOME, contato.getSobrenome());
+        valores.put(BancoDeDados.COLUNA_TELEFONE, contato.getTelefone());
+        valores.put(BancoDeDados.COLUNA_PAIS, contato.getPais());
 
         db.insert(BancoDeDados.TABELA_CONTATOS, null, valores);
     }
 
-    public ArrayList<String> listarContatos() {
-        ArrayList<String> lista = new ArrayList<>();
+    public List<Contato> listarContatos() {
+        List<Contato> lista = new ArrayList<>();
 
         Cursor cursor = db.query(
                 BancoDeDados.TABELA_CONTATOS,
@@ -42,13 +44,59 @@ public class DBController {
 
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                String nome = cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados.COLUNA_NOME));
-                String sobrenome = cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados.COLUNA_SOBRENOME));
-                lista.add(nome + " " + sobrenome);
+                Contato contato = new Contato();
+                contato.setId(cursor.getInt(cursor.getColumnIndexOrThrow(BancoDeDados.COLUNA_ID)));
+                contato.setNome(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados.COLUNA_NOME)));
+                contato.setSobrenome(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados.COLUNA_SOBRENOME)));
+                contato.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados.COLUNA_TELEFONE)));
+                contato.setPais(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados.COLUNA_PAIS)));
+
+                lista.add(contato);
             }
             cursor.close();
         }
 
         return lista;
+    }
+
+    public void excluirContato(int id) {
+        db.delete(BancoDeDados.TABELA_CONTATOS, BancoDeDados.COLUNA_ID + "=?", new String[]{String.valueOf(id)});
+    }
+
+    public void editarContato(Contato contato) {
+        ContentValues valores = new ContentValues();
+        valores.put(BancoDeDados.COLUNA_NOME, contato.getNome());
+        valores.put(BancoDeDados.COLUNA_SOBRENOME, contato.getSobrenome());
+        valores.put(BancoDeDados.COLUNA_TELEFONE, contato.getTelefone());
+        valores.put(BancoDeDados.COLUNA_PAIS, contato.getPais());
+
+        db.update(BancoDeDados.TABELA_CONTATOS, valores, BancoDeDados.COLUNA_ID + "=?", new String[]{String.valueOf(contato.getId())});
+    }
+
+    public Contato buscarContatoPorId(int id) {
+        Contato contato = null;
+
+        Cursor cursor = db.query(
+                BancoDeDados.TABELA_CONTATOS,
+                null,
+                BancoDeDados.COLUNA_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            contato = new Contato();
+            contato.setId(cursor.getInt(cursor.getColumnIndexOrThrow(BancoDeDados.COLUNA_ID)));
+            contato.setNome(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados.COLUNA_NOME)));
+            contato.setSobrenome(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados.COLUNA_SOBRENOME)));
+            contato.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados.COLUNA_TELEFONE)));
+            contato.setPais(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados.COLUNA_PAIS)));
+
+            cursor.close();
+        }
+
+        return contato;
     }
 }
