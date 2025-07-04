@@ -4,9 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class BancoDeDados extends SQLiteOpenHelper {
+public class BancoDeDados_Contatos extends SQLiteOpenHelper {
 
-    public static final String NOME_BANCO = "agenda.db";
+    public static final String NOME_BANCO = "contatos.db";
     public static final int VERSAO_BANCO = 1;
     public static final String TABELA_CONTATOS = "contatos";
 
@@ -16,7 +16,7 @@ public class BancoDeDados extends SQLiteOpenHelper {
     public static final String COLUNA_TELEFONE = "telefone";
     public static final String COLUNA_PAIS = "pais";
 
-    public BancoDeDados(Context context) {
+    public BancoDeDados_Contatos(Context context) {
         super(context, NOME_BANCO, null, VERSAO_BANCO);
     }
 

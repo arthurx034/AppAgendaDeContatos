@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.arthur.agendadecontatos.R;
-import com.arthur.agendadecontatos.controller.DBController;
+import com.arthur.agendadecontatos.controller.DBController_Contatos;
 import com.arthur.agendadecontatos.model.Contato;
 import com.arthur.agendadecontatos.model.Lista;
 
@@ -52,8 +52,8 @@ public class AdicionarContato extends AppCompatActivity {
 
             // Aqui celular é String, então não precisa converter para int
 
-            DBController dbController = new DBController(this);
-            dbController.adicionarContato(new Contato(nome, sobrenome, pais, celular));
+            DBController_Contatos dbControllerContatos = new DBController_Contatos(this);
+            dbControllerContatos.adicionarContato(new Contato(nome, sobrenome, pais, celular));
             Toast.makeText(this, "Contato salvo com sucesso!", Toast.LENGTH_SHORT).show();
             finish();
 
