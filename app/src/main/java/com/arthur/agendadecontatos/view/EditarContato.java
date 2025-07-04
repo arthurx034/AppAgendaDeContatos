@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.arthur.agendadecontatos.R;
-import com.arthur.agendadecontatos.controller.DBController;
+import com.arthur.agendadecontatos.controller.DBController_Contatos;
 import com.arthur.agendadecontatos.model.Contato;
 
 public class EditarContato extends AppCompatActivity {
@@ -21,7 +21,7 @@ public class EditarContato extends AppCompatActivity {
     private Button buttonSalvar, buttonExcluir;
     private ImageButton buttonVoltar;
 
-    private DBController dbController;
+    private DBController_Contatos dbControllerContatos;
     private Contato contatoAtual;
 
     @Override
@@ -38,7 +38,7 @@ public class EditarContato extends AppCompatActivity {
         buttonExcluir = findViewById(R.id.buttonExcluirContato);
         buttonVoltar = findViewById(R.id.imageButtonVoltar);
 
-        dbController = new DBController(this);
+        dbControllerContatos = new DBController_Contatos(this);
 
         // Recebe o ID do contato da intent
         Intent intent = getIntent();
@@ -50,7 +50,7 @@ public class EditarContato extends AppCompatActivity {
         }
 
         // Busca contato no banco
-        contatoAtual = dbController.buscarContatoPorId(contatoId);
+        contatoAtual = dbControllerContatos.buscarContatoPorId(contatoId);
         if (contatoAtual == null) {
             Toast.makeText(this, "Contato não encontrado", Toast.LENGTH_SHORT).show();
             finish();
@@ -91,7 +91,7 @@ public class EditarContato extends AppCompatActivity {
             contatoAtual.setTelefone(telefone);
             contatoAtual.setPais(pais);
 
-            dbController.editarContato(contatoAtual);
+            dbControllerContatos.editarContato(contatoAtual);
 
             Toast.makeText(this, "Contato atualizado", Toast.LENGTH_SHORT).show();
             finish();
@@ -99,7 +99,7 @@ public class EditarContato extends AppCompatActivity {
 
         // Botão excluir
         buttonExcluir.setOnClickListener(v -> {
-            dbController.excluirContato(contatoAtual.getId());
+            dbControllerContatos.excluirContato(contatoAtual.getId());
             Toast.makeText(this, "Contato excluído", Toast.LENGTH_SHORT).show();
             finish();
         });
