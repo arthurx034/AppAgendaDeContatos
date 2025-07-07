@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.arthur.agendadecontatos.R;
-import com.arthur.agendadecontatos.controller.DBController_Contatos;
+import com.arthur.agendadecontatos.controller.DBController_Agenda;
 import com.arthur.agendadecontatos.model.Contato;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class ListaContatos extends AppCompatActivity {
     private EditText editTextBuscar;
     private ListView listView;
 
-    private DBController_Contatos dbControllerContatos;
+    private DBController_Agenda dbControllerContatos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class ListaContatos extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         TextView textViewVoltar = findViewById(R.id.textViewVoltar);
 
-        dbControllerContatos = new DBController_Contatos(this);
+        dbControllerContatos = new DBController_Agenda(this);
 
         // Inicializa o adapter com a lista vazia
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nomes);
