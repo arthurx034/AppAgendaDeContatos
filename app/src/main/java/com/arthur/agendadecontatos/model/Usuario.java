@@ -2,6 +2,7 @@ package com.arthur.agendadecontatos.model;
 
 public class Usuario {
     private int id;
+    private String imageView;
     private String nomeCompleto;
     private String pais;
     private String email;
@@ -11,21 +12,23 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int id, String nomeCompleto, String pais, String email, String telefone, String senha) {
+    public Usuario(int id, String imageView, String nomeCompleto, String senha, String telefone, String email, String pais) {
         this.id = id;
+        this.imageView = imageView;
         this.nomeCompleto = nomeCompleto;
-        this.pais = pais;
-        this.email = email;
-        this.telefone = telefone;
         this.senha = senha;
+        this.telefone = telefone;
+        this.email = email;
+        this.pais = pais;
     }
 
-    public Usuario(String nomeCompleto, String pais, String email, String telefone, String senha) {
+    public Usuario(String imageView, String nomeCompleto, String senha, String telefone, String email, String pais) {
+        this.imageView = imageView;
         this.nomeCompleto = nomeCompleto;
-        this.pais = pais;
-        this.email = email;
-        this.telefone = senha;
         this.senha = senha;
+        this.telefone = telefone;
+        this.email = email;
+        this.pais = pais;
     }
 
     // Getters e Setters
@@ -36,6 +39,14 @@ public class Usuario {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(String imageView) {
+        this.imageView = imageView;
     }
 
     public String getNomeCompleto() {

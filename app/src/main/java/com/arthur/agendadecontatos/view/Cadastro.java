@@ -2,6 +2,7 @@ package com.arthur.agendadecontatos.view;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,12 +17,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.arthur.agendadecontatos.R;
-import com.arthur.agendadecontatos.controller.DBController_Contatos;
-import com.arthur.agendadecontatos.controller.DBController_Usuarios;
-import com.arthur.agendadecontatos.model.Contato;
+import com.arthur.agendadecontatos.controller.DBController_Agenda;
 import com.arthur.agendadecontatos.model.Usuario;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class Cadastro extends AppCompatActivity {
 
@@ -64,7 +65,15 @@ public class Cadastro extends AppCompatActivity {
         });
 
         btnCadastrar.setOnClickListener(v -> {
+            //Para exibir a imagem salva depois em outra activity
+            /*String caminho = usuario.getCaminhoImagem();
+            Bitmap bitmap = BitmapFactory.decodeFile(caminho);
+            imageView.setImageBitmap(bitmap);*/
+
+
             String nome = editTextNome.getText().toString().trim();
+            Bitmap bitmap = ((BitmapDrawable) imageViewFotoContato.getDrawable()).getBitmap();
+            String imageView = salvarImagemEmArquivo(bitmap, nome);
             String senha = editTextSenha.getText().toString().trim();
             String telefone = editTextTelefone.getText().toString().trim();
             String email = editTextEmail.getText().toString().trim();
@@ -78,8 +87,8 @@ public class Cadastro extends AppCompatActivity {
             // Aqui celular é String, então não precisa converter para int
 
             Intent intent = new Intent();
-            DBController_Usuarios dbControllerUsuarios = new DBController_Usuarios(this);
-            dbControllerUsuarios.CadastrarUsuario(new Usuario(nome, senha, telefone, email, pais));
+            DBController_Agenda dbControllerAgenda = new DBController_Agenda(this);
+            dbControllerAgenda.cadastrarUsuario(new Usuario(imageView, nome, senha, telefone, email, pais));
             Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
             intent = new Intent(Cadastro.this, MainActivity.class);
             startActivity(intent);
@@ -103,6 +112,25 @@ public class Cadastro extends AppCompatActivity {
         String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "FotoContato", null);
         return Uri.parse(path);
     }
+
+    private String salvarImagemEmArquivo(Bitmap bitmap, String nomeArquivo) {
+        File diretorio = new File(getFilesDir(), "usuarios");
+        if (!diretorio.exists()) {
+            diretorio.mkdirs(); // cria a pasta se não existir
+        }
+
+        File arquivoImagem = new File(diretorio, nomeArquivo + ".jpg");
+
+        try (FileOutputStream out = new FileOutputStream(arquivoImagem)) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            return arquivoImagem.getAbsolutePath(); // caminho completo da imagem
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
