@@ -50,8 +50,6 @@ public class AdicionarContato extends AppCompatActivity {
                 return;
             }
 
-            // Aqui celular é String, então não precisa converter para int
-
             DBController_Agenda dbControllerContatos = new DBController_Agenda(this);
             dbControllerContatos.adicionarContato(new Contato(nome, sobrenome, pais, celular));
             Toast.makeText(this, "Contato salvo com sucesso!", Toast.LENGTH_SHORT).show();
@@ -61,7 +59,6 @@ public class AdicionarContato extends AppCompatActivity {
             intent.putExtra("novoContato", nome + " " + sobrenome);
             setResult(RESULT_OK, intent);
             finish();
-
 
             // Limpa campos após adicionar
             editTextNome.setText("");

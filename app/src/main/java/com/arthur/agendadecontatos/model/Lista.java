@@ -3,9 +3,6 @@ package com.arthur.agendadecontatos.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Classe de modelo para armazenar listas de contatos em memória.
- */
 public class Lista {
     private ArrayList<String> nomes;
     private ArrayList<String> sobrenomes;
@@ -19,9 +16,7 @@ public class Lista {
         telefones = new ArrayList<>();
     }
 
-    /**
-     * Adiciona um novo contato à lista.
-     */
+    // Adiciona um novo contato à lista.
     public void adicionarContato(String nome, String telefone, String sobrenome, String pais) {
         nomes.add(nome);
         sobrenomes.add(sobrenome);
@@ -29,9 +24,7 @@ public class Lista {
         telefones.add(telefone);
     }
 
-    /**
-     * Remove o contato pelo índice.
-     */
+    // Remove o contato pelo índice.
     public void removerContato(int indice) {
         if (indice >= 0 && indice < nomes.size()) {
             nomes.remove(indice);

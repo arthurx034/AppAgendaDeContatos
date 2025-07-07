@@ -3,6 +3,7 @@ package com.arthur.agendadecontatos.view;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -70,19 +71,25 @@ public class Cadastro extends AppCompatActivity {
             Bitmap bitmap = BitmapFactory.decodeFile(caminho);
             imageView.setImageBitmap(bitmap);*/
 
-
             String nome = editTextNome.getText().toString().trim();
-            Bitmap bitmap = ((BitmapDrawable) imageViewFotoContato.getDrawable()).getBitmap();
-            String imageView = salvarImagemEmArquivo(bitmap, nome);
             String senha = editTextSenha.getText().toString().trim();
             String telefone = editTextTelefone.getText().toString().trim();
             String email = editTextEmail.getText().toString().trim();
             String pais = (String) spinnerPais.getSelectedItem();
 
-            if (nome.isEmpty() || senha.isEmpty() || telefone.isEmpty() || email == null || pais == null || pais.isEmpty()) {
+            Drawable drawable = imageViewFotoContato.getDrawable();
+            boolean imagemValida = imageViewFotoContato.getTag() != null &&
+                    !((BitmapDrawable) imageViewFotoContato.getDrawable()).getBitmap()
+                            .sameAs(((BitmapDrawable) getResources().getDrawable(R.drawable.foto_de_perfil)).getBitmap());
+
+
+            if (nome.isEmpty() || senha.isEmpty() || telefone.isEmpty() || email == null || pais == null || pais.isEmpty() || !imagemValida) {
                 Toast.makeText(this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            String imageView = salvarImagemEmArquivo(bitmap, nome);
 
             // Aqui celular é String, então não precisa converter para int
 
@@ -98,6 +105,7 @@ public class Cadastro extends AppCompatActivity {
 
 
             // Limpa campos após adicionar
+            imageViewFotoContato.setImageResource(R.drawable.foto_de_perfil);
             editTextNome.setText("");
             editTextSenha.setText("");
             editTextTelefone.setText("");
@@ -141,15 +149,16 @@ public class Cadastro extends AppCompatActivity {
                 // Imagem da galeria
                 Uri imageUri = data.getData();
                 imageViewFotoContato.setImageURI(imageUri);
+                imageViewFotoContato.setTag("imagem_selecionada"); // Marcar que imagem foi escolhida
 
             } else if (requestCode == CAMERA_REQUEST && data != null && data.getExtras() != null) {
                 // Foto tirada pela câmera
                 Bitmap foto = (Bitmap) data.getExtras().get("data");
                 imageViewFotoContato.setImageBitmap(foto);
+                imageViewFotoContato.setTag("imagem_selecionada"); // Marcar que imagem foi escolhida
 
                 // Opcional: salvar no MediaStore e obter URI
                 Uri uri = getImageUri(foto);
-                // imageUri = uri; // pode salvar se for necessário
             }
         }
     }
