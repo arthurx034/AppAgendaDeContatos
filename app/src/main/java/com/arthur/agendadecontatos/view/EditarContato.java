@@ -74,7 +74,7 @@ public class EditarContato extends AppCompatActivity {
         // Botão voltar
         buttonVoltar.setOnClickListener(v -> finish());
 
-        // Botão salvar
+        // Botão salvar Edição
         buttonSalvar.setOnClickListener(v -> {
             String nome = editTextNome.getText().toString().trim();
             String sobrenome = editTextSobrenome.getText().toString().trim();
@@ -97,7 +97,7 @@ public class EditarContato extends AppCompatActivity {
             finish();
         });
 
-        // Botão excluir
+        // Botão excluir contato
         buttonExcluir.setOnClickListener(v -> {
             dbControllerContatos.excluirContato(contatoAtual.getId());
             Toast.makeText(this, "Contato excluído", Toast.LENGTH_SHORT).show();

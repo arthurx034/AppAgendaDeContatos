@@ -5,117 +5,144 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".view.EditarContato">
 
-    <!-- Botão Voltar -->
-    <ImageButton
-        android:id="@+id/imageButtonVoltar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:background="@null"
-        android:contentDescription="Voltar"
-        app:srcCompat="@drawable/arrow_back_ios"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-    <!-- Título -->
-    <TextView
-        android:id="@+id/textViewEditarContato"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:text="Editar Contato"
-        android:textSize="23sp"
-        android:textStyle="bold" />
-
-    <!-- Nome -->
-    <EditText
-        android:id="@+id/editTextNome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:hint="Nome"
-        android:inputType="textPersonName"
-        android:minHeight="48dp" />
-
-    <!-- Sobrenome -->
-    <EditText
-        android:id="@+id/editTextSobrenome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:hint="Sobrenome"
-        android:inputType="textPersonName"
-        android:minHeight="48dp" />
-
-    <!-- Linha: País + Spinner -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_vertical"
+        android:layout_height="60dp"
+        android:background="@color/colorBlue"
         android:orientation="horizontal">
 
+        <!-- Botão Voltar -->
+        <ImageButton
+            android:id="@+id/imageButtonVoltar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@null"
+            android:contentDescription="Voltar"
+            app:srcCompat="@drawable/arrow_back_ios"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <!-- Título -->
         <TextView
+            android:id="@+id/textViewEditarContato"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Telefone"
-            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="100dp"
+            android:text="Editar Contato"
+            android:textColor="@color/black"
+            android:textSize="23sp"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/spinPais"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:entries="@array/lista_paises"
-            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="18dp">
 
-        <!-- Celular -->
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:text="Celular"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextCelular"
+            <!-- Nome -->
+            <EditText
+                android:id="@+id/editTextNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:hint="Nome"
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
+
+            <!-- Sobrenome -->
+            <EditText
+                android:id="@+id/editTextSobrenome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Sobrenome"
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
+
+        </LinearLayout>
+
+        <!-- Linha: País + Spinner -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="00 0000-0000"
-            android:inputType="phone"
-            android:minHeight="48dp" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Telefone"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinPais"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/lista_paises"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Celular -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Celular"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextCelular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="00 0000-0000"
+                android:inputType="phone"
+                android:minHeight="48dp" />
+
+        </LinearLayout>
+
+        <!-- Botão Salvar Alterações -->
+        <Button
+            android:id="@+id/buttonSalvarEdicao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/colorBlue"
+            android:text="Salvar Alterações"
+            android:textColor="@color/black" />
+
+        <!-- Botão Excluir Contato -->
+        <Button
+            android:id="@+id/buttonExcluirContato"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/colorBlue"
+            android:text="Excluir Contato"
+            android:textColor="@color/black" />
 
     </LinearLayout>
-
-    <!-- Botão Salvar Alterações -->
-    <Button
-        android:id="@+id/buttonSalvarEdicao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="32dp"
-        android:text="Salvar Alterações" />
-
-    <!-- Botão Excluir Contato -->
-    <Button
-        android:id="@+id/buttonExcluirContato"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Excluir Contato" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

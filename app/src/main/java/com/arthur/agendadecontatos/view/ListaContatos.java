@@ -22,8 +22,8 @@ import java.util.List;
 
 public class ListaContatos extends AppCompatActivity {
 
-    private List<Contato> listaContatos = new ArrayList<>(); // Lista real de contatos
-    private ArrayList<String> nomes = new ArrayList<>();    // Lista de nomes para mostrar no adapter
+    private List<Contato> listaContatos = new ArrayList<>();
+    private ArrayList<String> nomes = new ArrayList<>();
     private ArrayAdapter<String> adapter;
     private EditText editTextBuscar;
     private ListView listView;
@@ -44,7 +44,6 @@ public class ListaContatos extends AppCompatActivity {
 
         dbControllerContatos = new DBController_Agenda(this);
 
-        // Inicializa o adapter com a lista vazia
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nomes);
         listView.setAdapter(adapter);
 
@@ -95,11 +94,11 @@ public class ListaContatos extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        carregarContatos(); // Recarrega a lista sempre que a activity voltar
+        carregarContatos();
     }
 
     private void carregarContatos() {
-        listaContatos = dbControllerContatos.listarContatos();  // pega a lista real
+        listaContatos = dbControllerContatos.listarContatos();
         nomes.clear();
         for (Contato c : listaContatos) {
             nomes.add(c.getNome() + " " + c.getSobrenome());
