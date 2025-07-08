@@ -93,6 +93,27 @@ public class DBController_Agenda {
         return usuario;
     }
 
+    public int buscarIdUsuarioPorNome(String nome) {
+        int id = -1;
+        Cursor cursor = db.query(
+                BancoDeDados_Agenda.TABELA_USUARIOS,
+                new String[]{BancoDeDados_Agenda.USUARIO_COL_ID},
+                BancoDeDados_Agenda.USUARIO_COL_NOME_COMPLETO + "=?",
+                new String[]{nome},
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            id = cursor.getInt(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.USUARIO_COL_ID));
+            cursor.close();
+        }
+
+        return id;
+    }
+
+
     // --- CONTATOS ---
 
     public void adicionarContato(Contato contato) {
@@ -101,6 +122,7 @@ public class DBController_Agenda {
         valores.put(BancoDeDados_Agenda.CONTATO_COL_SOBRENOME, contato.getSobrenome());
         valores.put(BancoDeDados_Agenda.CONTATO_COL_TELEFONE, contato.getTelefone());
         valores.put(BancoDeDados_Agenda.CONTATO_COL_PAIS, contato.getPais());
+        valores.put(BancoDeDados_Agenda.CONTATO_COL_USUARIO, contato.getUsuarioId());
 
         db.insert(BancoDeDados_Agenda.TABELA_CONTATOS, null, valores);
     }
@@ -126,6 +148,7 @@ public class DBController_Agenda {
                 contato.setSobrenome(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_SOBRENOME)));
                 contato.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_TELEFONE)));
                 contato.setPais(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_PAIS)));
+                contato.setUsuarioId(cursor.getInt(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_USUARIO)));
                 lista.add(contato);
             }
             cursor.close();
@@ -133,6 +156,37 @@ public class DBController_Agenda {
 
         return lista;
     }
+
+    public List<Contato> listarTodosContatos() {
+        List<Contato> lista = new ArrayList<>();
+
+        Cursor cursor = db.query(
+                BancoDeDados_Agenda.TABELA_CONTATOS,
+                null,
+                null,
+                null,
+                null,
+                null,
+                BancoDeDados_Agenda.CONTATO_COL_NOME + " ASC"
+        );
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                Contato contato = new Contato();
+                contato.setId(cursor.getInt(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_ID)));
+                contato.setNome(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_NOME)));
+                contato.setSobrenome(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_SOBRENOME)));
+                contato.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_TELEFONE)));
+                contato.setPais(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_PAIS)));
+                contato.setUsuarioId(cursor.getInt(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_USUARIO)));
+                lista.add(contato);
+            }
+            cursor.close();
+        }
+
+        return lista;
+    }
+
 
     public Contato buscarContatoPorId(int id) {
         Contato contato = null;
@@ -154,6 +208,7 @@ public class DBController_Agenda {
             contato.setSobrenome(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_SOBRENOME)));
             contato.setTelefone(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_TELEFONE)));
             contato.setPais(cursor.getString(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_PAIS)));
+            contato.setUsuarioId(cursor.getInt(cursor.getColumnIndexOrThrow(BancoDeDados_Agenda.CONTATO_COL_USUARIO)));
             cursor.close();
         }
 
@@ -166,6 +221,7 @@ public class DBController_Agenda {
         valores.put(BancoDeDados_Agenda.CONTATO_COL_SOBRENOME, contato.getSobrenome());
         valores.put(BancoDeDados_Agenda.CONTATO_COL_TELEFONE, contato.getTelefone());
         valores.put(BancoDeDados_Agenda.CONTATO_COL_PAIS, contato.getPais());
+        valores.put(BancoDeDados_Agenda.CONTATO_COL_USUARIO, contato.getUsuarioId());
 
         db.update(
                 BancoDeDados_Agenda.TABELA_CONTATOS,

@@ -1,9 +1,11 @@
 package com.arthur.agendadecontatos.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -27,6 +29,7 @@ public class ListaContatos extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private EditText editTextBuscar;
     private ListView listView;
+    private SharedPreferences prefs;
 
     private DBController_Agenda dbControllerContatos;
 
@@ -98,7 +101,24 @@ public class ListaContatos extends AppCompatActivity {
     }
 
     private void carregarContatos() {
-        listaContatos = dbControllerContatos.listarContatos();
+        SharedPreferences prefs = getSharedPreferences("usuarioLogado", MODE_PRIVATE);
+        int usuarioId = prefs.getInt("usuarioId", -1);
+        Log.d("ListaContatos", "usuarioId lido do SharedPreferences: " + usuarioId);
+
+        if (usuarioId == -1) {
+            listaContatos.clear();
+            nomes.clear();
+            adapter.notifyDataSetChanged();
+            Log.d("ListaContatos", "Nenhum usuário logado, lista limpa");
+            return;
+        }
+
+        listaContatos = dbControllerContatos.listarTodosContatos();
+        Log.d("ListaContatos", "Contatos carregados do DB: " + listaContatos.size());
+        for (Contato c : listaContatos) {
+            Log.d("ListaContatos", "Contato: " + c.getNome() + " " + c.getSobrenome());
+        }
+
         nomes.clear();
         for (Contato c : listaContatos) {
             nomes.add(c.getNome() + " " + c.getSobrenome());

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class BancoDeDados_Agenda extends SQLiteOpenHelper {
 
     public static final String NOME_BANCO = "agenda.db";
-    public static final int VERSAO_BANCO = 4;
+    public static final int VERSAO_BANCO = 5;
 
     // Tabela contatos
     public static final String TABELA_CONTATOS = "contatos";
@@ -16,6 +16,7 @@ public class BancoDeDados_Agenda extends SQLiteOpenHelper {
     public static final String CONTATO_COL_SOBRENOME = "sobrenome";
     public static final String CONTATO_COL_TELEFONE = "telefone";
     public static final String CONTATO_COL_PAIS = "pais";
+    public static final String CONTATO_COL_USUARIO = "usuarioId";  // Renomeei para "usuarioId" para ficar claro
 
     // Tabela usuarios
     public static final String TABELA_USUARIOS = "usuarios";
@@ -33,13 +34,6 @@ public class BancoDeDados_Agenda extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlContatos = "CREATE TABLE " + TABELA_CONTATOS + " (" +
-                CONTATO_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                CONTATO_COL_NOME + " TEXT NOT NULL, " +
-                CONTATO_COL_SOBRENOME + " TEXT NOT NULL, " +
-                CONTATO_COL_TELEFONE + " TEXT NOT NULL, " +
-                CONTATO_COL_PAIS + " TEXT NOT NULL)";
-
         String sqlUsuarios = "CREATE TABLE " + TABELA_USUARIOS + " (" +
                 USUARIO_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 USUARIO_COL_IMAGEVIEW + " TEXT NOT NULL, " +
@@ -49,8 +43,17 @@ public class BancoDeDados_Agenda extends SQLiteOpenHelper {
                 USUARIO_COL_EMAIL + " TEXT NOT NULL, " +
                 USUARIO_COL_PAIS + " TEXT NOT NULL)";
 
-        db.execSQL(sqlContatos);
+        String sqlContatos = "CREATE TABLE " + TABELA_CONTATOS + " (" +
+                CONTATO_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                CONTATO_COL_NOME + " TEXT NOT NULL, " +
+                CONTATO_COL_SOBRENOME + " TEXT NOT NULL, " +
+                CONTATO_COL_TELEFONE + " TEXT NOT NULL, " +
+                CONTATO_COL_PAIS + " TEXT NOT NULL, " +
+                CONTATO_COL_USUARIO + " INTEGER NOT NULL, " +
+                "FOREIGN KEY (" + CONTATO_COL_USUARIO + ") REFERENCES " + TABELA_USUARIOS + "(" + USUARIO_COL_ID + ") ON DELETE CASCADE)";
+
         db.execSQL(sqlUsuarios);
+        db.execSQL(sqlContatos);
     }
 
     @Override

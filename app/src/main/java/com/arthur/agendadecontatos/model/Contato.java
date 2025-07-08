@@ -6,23 +6,26 @@ public class Contato {
     private String sobrenome;
     private String pais;
     private String telefone;
+    private int usuarioId;  // mudou de usuarioContatos para usuarioId para seguir banco
 
     public Contato() {
     }
 
-    public Contato(int id, String nome, String sobrenome, String pais, String telefone) {
+    public Contato(int id, String nome, String sobrenome, String pais, String telefone, int usuarioId) {
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.pais = pais;
         this.telefone = telefone;
+        this.usuarioId = usuarioId;
     }
 
-    public Contato(String nome, String sobrenome, String pais, String telefone) {
+    public Contato(String nome, String sobrenome, String pais, String telefone, int usuarioId) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.pais = pais;
         this.telefone = telefone;
+        this.usuarioId = usuarioId;
     }
 
     // Getters e Setters
@@ -65,6 +68,14 @@ public class Contato {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public int getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     @Override

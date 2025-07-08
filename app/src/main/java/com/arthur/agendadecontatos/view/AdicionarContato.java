@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.arthur.agendadecontatos.R;
 import com.arthur.agendadecontatos.controller.DBController_Agenda;
 import com.arthur.agendadecontatos.model.Contato;
-import com.arthur.agendadecontatos.model.Lista;
 
 public class AdicionarContato extends AppCompatActivity {
 
@@ -22,8 +21,9 @@ public class AdicionarContato extends AppCompatActivity {
     private Spinner spinPais;
     private EditText editTextCelular;
     private Button buttonAdicionarContato;
-    private Lista lista;
     private ImageButton imagemButtonVoltar;
+
+    private DBController_Agenda dbController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class AdicionarContato extends AppCompatActivity {
         buttonAdicionarContato = findViewById(R.id.buttonAdicionarContato);
         imagemButtonVoltar = findViewById(R.id.imageButtonVoltar);
 
-        lista = new Lista();
+        dbController = new DBController_Agenda(this);
 
         buttonAdicionarContato.setOnClickListener(v -> {
             String nome = editTextNome.getText().toString().trim();
@@ -50,21 +50,20 @@ public class AdicionarContato extends AppCompatActivity {
                 return;
             }
 
-            DBController_Agenda dbControllerContatos = new DBController_Agenda(this);
-            dbControllerContatos.adicionarContato(new Contato(nome, sobrenome, pais, celular));
-            Toast.makeText(this, "Contato salvo com sucesso!", Toast.LENGTH_SHORT).show();
-            finish();
+            // 🔒 Pegue o ID do usuário logado ou um ID válido
+            int usuarioId = 1; // Exemplo fixo — substitua com ID real do usuário logado
 
+            Contato novoContato = new Contato(nome, sobrenome, pais, celular, usuarioId);
+            dbController.adicionarContato(novoContato);
+
+            Toast.makeText(this, "Contato salvo com sucesso!", Toast.LENGTH_SHORT).show();
+
+            // Retorna nome do novo contato
             Intent intent = new Intent();
             intent.putExtra("novoContato", nome + " " + sobrenome);
             setResult(RESULT_OK, intent);
-            finish();
 
-            // Limpa campos após adicionar
-            editTextNome.setText("");
-            editTextSobrenome.setText("");
-            editTextCelular.setText("");
-            spinPais.setSelection(0);
+            finish(); // finaliza e volta para tela anterior
         });
 
         imagemButtonVoltar.setOnClickListener(v -> finish());

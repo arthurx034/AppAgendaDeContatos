@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="Agenda de Contatos"
+        android:text="@string/agenda_de_contatos"
         android:textColor="@android:color/black"
         android:textSize="28sp"
         android:textStyle="bold" />
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/colorBlue"
-        android:text="Adicionar Contato"
+        android:text="@string/adicionar_contato"
         android:textColor="@color/black" />
 
     <Button
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorBlue"
-        android:text="Ver Lista de Contatos"
+        android:text="@string/ver_lista_de_contatos"
         android:textColor="@color/black" />
 
 </LinearLayout>

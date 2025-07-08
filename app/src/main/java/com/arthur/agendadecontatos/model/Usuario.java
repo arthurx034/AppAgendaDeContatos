@@ -12,6 +12,10 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(int id) {
+        this.id = id;
+    }
+
     public Usuario(int id, String imageView, String nomeCompleto, String senha, String telefone, String email, String pais) {
         this.id = id;
         this.imageView = imageView;

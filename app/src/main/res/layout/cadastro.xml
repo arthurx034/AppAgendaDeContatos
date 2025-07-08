@@ -125,12 +125,21 @@
 
         <Button
             android:id="@+id/btnCadastrar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_margin="50dp"
+            android:layout_marginTop="50dp"
             android:backgroundTint="@color/colorBlue"
             android:text="Cadastrar"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/colorBlue"
+            android:text="Login"
             android:textColor="@color/black" />
 
     </LinearLayout>
