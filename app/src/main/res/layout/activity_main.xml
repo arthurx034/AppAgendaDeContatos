@@ -5,10 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:gravity="center"
+    android:gravity="top|center"
     android:orientation="vertical"
-    android:padding="24dp"
-    tools:context="com.arthur.agendadecontatos.view.MainActivity">
+    android:padding="24dp">
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/logo_agenda" />
 
     <TextView
         android:id="@+id/textViewTitulo"
@@ -25,12 +29,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Adicionar Contato" />
+        android:backgroundTint="@color/colorBlue"
+        android:text="Adicionar Contato"
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/btnListaContatos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ver Lista de Contatos" />
+        android:backgroundTint="@color/colorBlue"
+        android:text="Ver Lista de Contatos"
+        android:textColor="@color/black" />
 
 </LinearLayout>
