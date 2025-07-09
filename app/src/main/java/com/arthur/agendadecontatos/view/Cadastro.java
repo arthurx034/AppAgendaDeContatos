@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -40,7 +41,6 @@ public class Cadastro extends AppCompatActivity {
 
         Lista.getInstance().limpar();
 
-        Button btnLogin = findViewById(R.id.btnLogin);
         Button btnSelecionarFoto = findViewById(R.id.btnSelecionarFoto);
         imageViewFotoContato = findViewById(R.id.imageViewFotoContato);
         Button btnCadastrar = findViewById(R.id.btnCadastrar);
@@ -49,6 +49,7 @@ public class Cadastro extends AppCompatActivity {
         EditText editTextTelefone = findViewById(R.id.editTextTelefoneContato);
         Spinner spinnerPais = findViewById(R.id.spinPais);
         EditText editTextEmail = findViewById(R.id.editTextTextEmailAddress);
+        ImageButton btnVoltar = findViewById(R.id.btnVoltar);
 
         btnSelecionarFoto.setOnClickListener(v -> {
             String[] options = {"Galeria", "Câmera"};
@@ -105,10 +106,7 @@ public class Cadastro extends AppCompatActivity {
             finish();
         });
 
-        btnLogin.setOnClickListener(v -> {
-            startActivity(new Intent(Cadastro.this, Login.class));
-            finish();
-        });
+        btnVoltar.setOnClickListener(v -> finish());
     }
 
     private String salvarImagemEmArquivo(Bitmap bitmap, String nomeArquivo) {

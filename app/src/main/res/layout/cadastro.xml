@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -13,14 +14,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBlue"
-            android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="18dp">
+
+            <ImageButton
+                android:id="@+id/btnVoltar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="@null"
+                android:contentDescription="@string/voltar"
+                app:srcCompat="@drawable/arrow_back_ios"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="114dp"
                 android:text="@string/cadastro"
                 android:textColor="@color/black"
                 android:textSize="24sp"
@@ -69,6 +81,7 @@
                 android:hint="@string/nome_completo"
                 android:importantForAutofill="no"
                 android:inputType="text"
+                android:textColorHint="#546E7A"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <LinearLayout
@@ -103,6 +116,7 @@
                 android:hint="@string/telefone_de_contato"
                 android:importantForAutofill="no"
                 android:inputType="phone"
+                android:textColorHint="#546E7A"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <EditText
@@ -113,6 +127,7 @@
                 android:hint="@string/e_mail"
                 android:importantForAutofill="no"
                 android:inputType="textEmailAddress"
+                android:textColorHint="#546E7A"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <EditText
@@ -135,15 +150,6 @@
             android:layout_marginTop="50dp"
             android:backgroundTint="@color/colorBlue"
             android:text="@string/cadastrar"
-            android:textColor="@color/black" />
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/colorBlue"
-            android:text="@string/login"
             android:textColor="@color/black" />
 
     </LinearLayout>

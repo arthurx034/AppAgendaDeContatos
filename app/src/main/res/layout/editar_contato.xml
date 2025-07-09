@@ -58,7 +58,8 @@
                 android:hint="@string/nome_editar_contato"
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                tools:ignore="VisualLintTextFieldSize" />
 
             <!-- Sobrenome -->
             <EditText
@@ -69,7 +70,9 @@
                 android:hint="@string/sobrenome_editar_contato"
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:textColorHint="#78909C"
+                tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
 
         </LinearLayout>
 
@@ -121,7 +124,9 @@
                 android:hint="@string/_00_0000_0000"
                 android:importantForAutofill="no"
                 android:inputType="phone"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:textColorHint="#78909C"
+                tools:ignore="VisualLintTextFieldSize" />
 
         </LinearLayout>
 
