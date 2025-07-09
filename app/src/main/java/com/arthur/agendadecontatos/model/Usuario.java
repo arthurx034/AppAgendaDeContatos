@@ -12,20 +12,6 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int id) {
-        this.id = id;
-    }
-
-    public Usuario(int id, String imageView, String nomeCompleto, String senha, String telefone, String email, String pais) {
-        this.id = id;
-        this.imageView = imageView;
-        this.nomeCompleto = nomeCompleto;
-        this.senha = senha;
-        this.telefone = telefone;
-        this.email = email;
-        this.pais = pais;
-    }
-
     public Usuario(String imageView, String nomeCompleto, String senha, String telefone, String email, String pais) {
         this.imageView = imageView;
         this.nomeCompleto = nomeCompleto;

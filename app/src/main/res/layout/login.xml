@@ -21,7 +21,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="@string/login_textView"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -39,14 +39,14 @@
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_gravity="center"
-                android:contentDescription="Logo do aplicativo"
+                android:contentDescription="@string/logo_do_aplicativo"
                 android:src="@drawable/logo_agenda" />
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint=" E-mail">
+                android:hint="@string/e_mail_login">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextEmailAddress"
@@ -60,7 +60,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Senha"
+                android:hint="@string/senha_login"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -77,7 +77,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="95dp"
                 android:backgroundTint="@color/colorBlue"
-                android:text="Login"
+                android:text="@string/login_button"
                 android:textColor="@color/black" />
 
             <Button
@@ -86,7 +86,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/colorBlue"
-                android:text="Cadastrar"
+                android:text="@string/cadastrar_button"
                 android:textColor="@color/black" />
 
         </LinearLayout>

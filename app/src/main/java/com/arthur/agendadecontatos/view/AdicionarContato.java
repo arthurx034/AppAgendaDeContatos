@@ -20,8 +20,6 @@ public class AdicionarContato extends AppCompatActivity {
     private EditText editTextSobrenome;
     private Spinner spinPais;
     private EditText editTextCelular;
-    private Button buttonAdicionarContato;
-    private ImageButton imagemButtonVoltar;
 
     private DBController_Agenda dbController;
 
@@ -34,8 +32,8 @@ public class AdicionarContato extends AppCompatActivity {
         editTextSobrenome = findViewById(R.id.editTextSobrenome);
         spinPais = findViewById(R.id.spinPais);
         editTextCelular = findViewById(R.id.editTextCelular);
-        buttonAdicionarContato = findViewById(R.id.buttonAdicionarContato);
-        imagemButtonVoltar = findViewById(R.id.imageButtonVoltar);
+        Button buttonAdicionarContato = findViewById(R.id.buttonAdicionarContato);
+        ImageButton imagemButtonVoltar = findViewById(R.id.imageButtonVoltar);
 
         dbController = new DBController_Agenda(this);
 
@@ -50,20 +48,23 @@ public class AdicionarContato extends AppCompatActivity {
                 return;
             }
 
-            // 🔒 Pegue o ID do usuário logado ou um ID válido
-            int usuarioId = 1; // Exemplo fixo — substitua com ID real do usuário logado
+            // Pega o ID do usuário logado do SharedPreferences
+            int usuarioId = getSharedPreferences("usuarioLogado", MODE_PRIVATE).getInt("usuarioId", -1);
+            if (usuarioId == -1) {
+                Toast.makeText(this, "Usuário não está logado.", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             Contato novoContato = new Contato(nome, sobrenome, pais, celular, usuarioId);
             dbController.adicionarContato(novoContato);
 
             Toast.makeText(this, "Contato salvo com sucesso!", Toast.LENGTH_SHORT).show();
 
-            // Retorna nome do novo contato
             Intent intent = new Intent();
             intent.putExtra("novoContato", nome + " " + sobrenome);
             setResult(RESULT_OK, intent);
 
-            finish(); // finaliza e volta para tela anterior
+            finish();
         });
 
         imagemButtonVoltar.setOnClickListener(v -> finish());

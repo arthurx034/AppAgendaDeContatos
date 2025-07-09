@@ -1,12 +1,14 @@
 package com.arthur.agendadecontatos.model;
 
+import androidx.annotation.NonNull;
+
 public class Contato {
     private int id;
     private String nome;
     private String sobrenome;
     private String pais;
     private String telefone;
-    private int usuarioId;  // mudou de usuarioContatos para usuarioId para seguir banco
+    private int usuarioId;
 
     public Contato() {
     }
@@ -78,6 +80,7 @@ public class Contato {
         this.usuarioId = usuarioId;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return nome + " " + sobrenome;
