@@ -10,8 +10,6 @@ import com.arthur.agendadecontatos.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnAdicionarContato, btnListaContatos;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

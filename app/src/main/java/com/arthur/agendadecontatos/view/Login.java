@@ -11,8 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.arthur.agendadecontatos.R;
 import com.arthur.agendadecontatos.controller.DBController_Agenda;
 import com.arthur.agendadecontatos.model.Contato;
+import com.arthur.agendadecontatos.model.Lista;
 import com.arthur.agendadecontatos.model.Usuario;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
 
 public class Login extends AppCompatActivity {
 
@@ -21,7 +24,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        DBController_Agenda dbController_Agenda = new DBController_Agenda(this);
+        DBController_Agenda dbController = new DBController_Agenda(this);
 
         TextInputEditText editTextEmailAddress = findViewById(R.id.editTextEmailAddress);
         TextInputEditText editTextPassword = findViewById(R.id.editTextPassword);
@@ -29,48 +32,46 @@ public class Login extends AppCompatActivity {
         Button btnLogin = findViewById(R.id.btnLogin);
 
         btnLogin.setOnClickListener(v -> {
-            String email = editTextEmailAddress.getText().toString().trim();
-            String senha = editTextPassword.getText().toString().trim();
+            String email = Objects.requireNonNull(editTextEmailAddress.getText()).toString().trim();
+            String senha = Objects.requireNonNull(editTextPassword.getText()).toString().trim();
 
             if (email.isEmpty() || senha.isEmpty()) {
                 Toast.makeText(Login.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            boolean usuarioEncontrado = false;
-            for (Usuario usuario : dbController_Agenda.listarUsuarios()) {
+            Usuario usuarioEncontrado = null;
+            for (Usuario usuario : dbController.listarUsuarios()) {
                 if (usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)) {
-                    usuarioEncontrado = true;
-
-                    int usuarioId = dbController_Agenda.buscarIdUsuarioPorNome(usuario.getNomeCompleto());
-
-                    SharedPreferences prefs = getSharedPreferences("usuarioLogado", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putInt("usuarioId", usuarioId);
-                    editor.apply();
-
-                    // Associa todos os contatos em memória (Lista) ao usuário logado
-                    for (Contato contato : com.arthur.agendadecontatos.model.Lista.getInstance().getContatos()) {
-                        contato.setUsuarioId(usuarioId);
-                        dbController_Agenda.adicionarContato(contato);
-                    }
-
-                    // Limpa a lista em memória depois de salvar
-                    com.arthur.agendadecontatos.model.Lista.getInstance().limpar();
-
-                    Toast.makeText(Login.this, "Login realizado com sucesso", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Login.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    break;
-                }
-                if (!usuarioEncontrado) {
-                    Toast.makeText(Login.this, "Usuario ou senha nao encontrado", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Login.this, "Clique no botao abaixo para se cadastrar", Toast.LENGTH_SHORT).show();
+                    usuarioEncontrado = usuario;
                     break;
                 }
             }
+
+            if (usuarioEncontrado != null) {
+                // Salva o id do usuário logado no SharedPreferences
+                SharedPreferences prefs = getSharedPreferences("usuarioLogado", MODE_PRIVATE);
+                prefs.edit().putInt("usuarioId", usuarioEncontrado.getId()).apply();
+
+                // Salva contatos temporários, se houver, associando ao usuário atual
+                if (!Lista.getInstance().getContatos().isEmpty()) {
+                    for (Contato contato : Lista.getInstance().getContatos()) {
+                        contato.setUsuarioId(usuarioEncontrado.getId());
+                        dbController.adicionarContato(contato);
+                    }
+                    Lista.getInstance().limpar();
+                }
+
+                Toast.makeText(Login.this, "Login realizado com sucesso", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(Login.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(Login.this, "Usuário ou senha não encontrados", Toast.LENGTH_SHORT).show();
+            }
         });
+
         btnCadastrar.setOnClickListener(v -> {
             Intent intent = new Intent(Login.this, Cadastro.class);
             startActivity(intent);

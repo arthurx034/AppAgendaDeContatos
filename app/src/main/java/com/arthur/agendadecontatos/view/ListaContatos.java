@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -25,11 +24,9 @@ import java.util.List;
 public class ListaContatos extends AppCompatActivity {
 
     private List<Contato> listaContatos = new ArrayList<>();
-    private ArrayList<String> nomes = new ArrayList<>();
+    private final ArrayList<String> nomes = new ArrayList<>();
     private ArrayAdapter<String> adapter;
     private EditText editTextBuscar;
-    private ListView listView;
-    private SharedPreferences prefs;
 
     private DBController_Agenda dbControllerContatos;
 
@@ -42,7 +39,7 @@ public class ListaContatos extends AppCompatActivity {
         ImageButton imagemBack = findViewById(R.id.imagemBack);
         ImageButton imagemSearch = findViewById(R.id.imagemSearch);
         editTextBuscar = findViewById(R.id.editTextBuscar);
-        listView = findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.listView);
         TextView textViewVoltar = findViewById(R.id.textViewVoltar);
 
         dbControllerContatos = new DBController_Agenda(this);
@@ -50,7 +47,7 @@ public class ListaContatos extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nomes);
         listView.setAdapter(adapter);
 
-        carregarContatos(); // carrega a lista inicial
+        carregarContatos();
 
         fabAdicionar.setOnClickListener(v -> {
             Intent intent = new Intent(ListaContatos.this, AdicionarContato.class);
@@ -87,7 +84,7 @@ public class ListaContatos extends AppCompatActivity {
         });
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            Contato contatoSelecionado = listaContatos.get(position); // Agora existe!
+            Contato contatoSelecionado = listaContatos.get(position);
             Intent intent = new Intent(ListaContatos.this, EditarContato.class);
             intent.putExtra("idContato", contatoSelecionado.getId());
             startActivity(intent);
@@ -103,21 +100,15 @@ public class ListaContatos extends AppCompatActivity {
     private void carregarContatos() {
         SharedPreferences prefs = getSharedPreferences("usuarioLogado", MODE_PRIVATE);
         int usuarioId = prefs.getInt("usuarioId", -1);
-        Log.d("ListaContatos", "usuarioId lido do SharedPreferences: " + usuarioId);
 
         if (usuarioId == -1) {
             listaContatos.clear();
             nomes.clear();
             adapter.notifyDataSetChanged();
-            Log.d("ListaContatos", "Nenhum usuário logado, lista limpa");
             return;
         }
 
-        listaContatos = dbControllerContatos.listarTodosContatos();
-        Log.d("ListaContatos", "Contatos carregados do DB: " + listaContatos.size());
-        for (Contato c : listaContatos) {
-            Log.d("ListaContatos", "Contato: " + c.getNome() + " " + c.getSobrenome());
-        }
+        listaContatos = dbControllerContatos.listarContatosPorUsuario(usuarioId); // FILTRAR PELO ID DO USUÁRIO
 
         nomes.clear();
         for (Contato c : listaContatos) {
@@ -125,4 +116,5 @@ public class ListaContatos extends AppCompatActivity {
         }
         adapter.notifyDataSetChanged();
     }
+
 }

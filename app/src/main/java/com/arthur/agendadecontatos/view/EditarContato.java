@@ -18,8 +18,6 @@ public class EditarContato extends AppCompatActivity {
 
     private EditText editTextNome, editTextSobrenome, editTextTelefone;
     private Spinner spinnerPais;
-    private Button buttonSalvar, buttonExcluir;
-    private ImageButton buttonVoltar;
 
     private DBController_Agenda dbControllerContatos;
     private Contato contatoAtual;
@@ -34,9 +32,9 @@ public class EditarContato extends AppCompatActivity {
         editTextSobrenome = findViewById(R.id.editTextSobrenome);
         editTextTelefone = findViewById(R.id.editTextCelular);
         spinnerPais = findViewById(R.id.spinPais);
-        buttonSalvar = findViewById(R.id.buttonSalvarEdicao);
-        buttonExcluir = findViewById(R.id.buttonExcluirContato);
-        buttonVoltar = findViewById(R.id.imageButtonVoltar);
+        Button buttonSalvar = findViewById(R.id.buttonSalvarEdicao);
+        Button buttonExcluir = findViewById(R.id.buttonExcluirContato);
+        ImageButton buttonVoltar = findViewById(R.id.imageButtonVoltar);
 
         dbControllerContatos = new DBController_Agenda(this);
 
