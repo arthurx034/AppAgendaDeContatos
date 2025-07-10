@@ -34,6 +34,11 @@ public class Cadastro extends AppCompatActivity {
 
     private ImageView imageViewFotoContato;
 
+    private boolean isEmailValido(String email) {
+        String regex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        return email != null && email.matches(regex);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +86,11 @@ public class Cadastro extends AppCompatActivity {
                             ((BitmapDrawable) getResources().getDrawable(R.drawable.foto_de_perfil)).getBitmap()
                     );
 
+            if (!isEmailValido(email)) {
+                Toast.makeText(this, "E-mail inválido", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (nome.isEmpty() || senha.isEmpty() || telefone.isEmpty() || email.isEmpty() || pais.isEmpty() || !imagemValida) {
                 Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 return;
@@ -95,7 +105,11 @@ public class Cadastro extends AppCompatActivity {
             int usuarioId = db.buscarIdUsuarioPorNome(nome);
 
             SharedPreferences prefs = getSharedPreferences("usuarioLogado", MODE_PRIVATE);
-            prefs.edit().putInt("usuarioId", usuarioId).apply();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("usuarioId", usuarioId);
+            editor.putString("fotoUsuario", imageViewPath); // salva o caminho da imagem
+            editor.apply();
+
 
             Lista.getInstance().limpar();
 
