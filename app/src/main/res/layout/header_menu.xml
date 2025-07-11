@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:background="@color/colorBlue"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/header_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/foto_borda"
+        android:scaleType="centerCrop" />
+</LinearLayout>

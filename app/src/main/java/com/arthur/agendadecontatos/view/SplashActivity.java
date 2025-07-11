@@ -27,14 +27,16 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        ImageView logoImage = findViewById(R.id.logoImage);
-        Animation fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
-        logoImage.startAnimation(fadeIn);
+        ImageView logo = findViewById(R.id.logoImage);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.fade_scale);
+        logo.startAnimation(animation);
 
-        dbController = new DBController_Agenda(this);
-
-        new Handler().postDelayed(this::verificarUsuarios, SPLASH_DURATION);
+        new Handler().postDelayed(() -> {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            finish();
+        }, 2000); // 2 segundos de splash
     }
+
 
     private void verificarUsuarios() {
         List<Usuario> usuarios = dbController.listarUsuarios();

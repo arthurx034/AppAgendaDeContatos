@@ -8,15 +8,8 @@
     <!-- Borda da imagem -->
     <stroke
         android:width="3dp"
-        android:color="#2196F3" /> <!-- Azul -->
+        android:color="@color/colorBlue" /> <!-- Azul -->
 
     <!-- Deixa a forma redonda -->
     <corners android:radius="500dp" />
-
-    <!-- Espaçamento interno -->
-    <padding
-        android:bottom="10dp"
-        android:left="10dp"
-        android:right="10dp"
-        android:top="10dp" />
 </shape>
