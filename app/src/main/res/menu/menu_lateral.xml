@@ -1,6 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/menu_perfil"
+        android:icon="@drawable/user"
+        android:title="@string/perfil" />
+    <item
+        android:id="@+id/menu_setting"
+        android:icon="@drawable/settings"
+        android:title="@string/settings" />
+    <item
         android:id="@+id/menu_sair"
         android:icon="@drawable/logout"
-        android:title="Sair" />
+        android:title="@string/logout" />
 </menu>

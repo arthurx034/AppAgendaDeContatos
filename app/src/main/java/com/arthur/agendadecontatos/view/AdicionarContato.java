@@ -2,6 +2,7 @@ package com.arthur.agendadecontatos.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -37,6 +38,16 @@ public class AdicionarContato extends AppCompatActivity {
 
         dbController = new DBController_Agenda(this);
 
+        // ✅ CONFIGURAÇÃO DO SPINNER
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.lista_paises, // certifique-se que está no strings.xml
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinPais.setAdapter(adapter);
+
+        // Botão Adicionar
         buttonAdicionarContato.setOnClickListener(v -> {
             String nome = editTextNome.getText().toString().trim();
             String sobrenome = editTextSobrenome.getText().toString().trim();
@@ -48,7 +59,6 @@ public class AdicionarContato extends AppCompatActivity {
                 return;
             }
 
-            // Pega o ID do usuário logado do SharedPreferences
             int usuarioId = getSharedPreferences("usuarioLogado", MODE_PRIVATE).getInt("usuarioId", -1);
             if (usuarioId == -1) {
                 Toast.makeText(this, "Usuário não está logado.", Toast.LENGTH_SHORT).show();
@@ -63,7 +73,6 @@ public class AdicionarContato extends AppCompatActivity {
             Intent intent = new Intent();
             intent.putExtra("novoContato", nome + " " + sobrenome);
             setResult(RESULT_OK, intent);
-
             finish();
         });
 

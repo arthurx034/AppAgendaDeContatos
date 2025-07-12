@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="12dp"
     tools:ignore="VisualLintBounds">
 
-    <!-- Topo: Botão Voltar + Texto + Busca -->
+    <!-- Topo: Voltar + Título + Search -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="10dp">
+        android:paddingBottom="8dp">
 
         <ImageButton
             android:id="@+id/imagemBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:contentDescription="@string/todo"
-            android:paddingStart="5dp"
-            android:scaleType="centerCrop"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/voltar"
             android:src="@drawable/arrow_back_ios"
-            tools:ignore="RtlSymmetry,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            app:tint="@color/black"
+            tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
 
         <TextView
             android:id="@+id/textViewVoltar"
@@ -33,63 +36,72 @@
             android:layout_weight="1"
             android:paddingStart="8dp"
             android:text="@string/voltar_lista_contatos"
+            android:textColor="@color/black"
             android:textSize="18sp"
+            android:textStyle="bold"
             tools:ignore="RtlSymmetry" />
 
         <ImageButton
             android:id="@+id/imagemSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?selectableItemBackgroundBorderless"
             android:contentDescription="@string/buscar"
-            android:padding="10dp"
             android:src="@drawable/search"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            app:tint="@color/black"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
-    <!-- Campo de Busca -->
-    <EditText
-        android:id="@+id/editTextBuscar"
+    <!-- Campo de Busca (oculto inicialmente) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutBusca"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/edittext_borda"
-        android:hint="@string/campo_buscar"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:paddingHorizontal="12dp"
-        android:textColorHint="@color/gray"
-        android:visibility="gone" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:visibility="gone"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/colorBlue">
 
-    <!-- Título + Botão Adicionar -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextBuscar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/campo_buscar"
+            android:inputType="text"
+            android:textColorHint="@color/gray" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Título da Lista + Botão Adicionar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="16dp"
         android:paddingBottom="8dp">
 
         <TextView
+            android:id="@+id/textViewTitulo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingStart="20dp"
             android:text="@string/contatos"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:ignore="RtlSymmetry" />
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            android:textStyle="bold" />
 
+        <!-- FAB Estilizado -->
         <ImageButton
             android:id="@+id/fabAdicionar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="20dp"
-            android:background="@null"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_fab"
+            android:backgroundTint="@color/colorBlue"
             android:contentDescription="@string/adicionar_contato_lista_contato"
-            android:elevation="8dp"
-            android:src="@drawable/add_pessoa"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:elevation="6dp"
+            android:src="@drawable/add_contatos"
+            app:tint="@android:color/white"
+            tools:ignore="TouchTargetSizeCheck,ImageContrastCheck" />
     </LinearLayout>
 
     <!-- Lista de Contatos -->
@@ -97,6 +109,9 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.5dp"
+        android:listSelector="?android:attr/selectableItemBackground" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>

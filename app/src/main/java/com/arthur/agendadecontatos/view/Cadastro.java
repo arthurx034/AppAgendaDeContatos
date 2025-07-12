@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.arthur.agendadecontatos.R;
 import com.arthur.agendadecontatos.controller.DBController_Agenda;
 import com.arthur.agendadecontatos.model.Lista;
 import com.arthur.agendadecontatos.model.Usuario;
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,13 +33,7 @@ public class Cadastro extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int CAMERA_REQUEST = 2;
-
-    private ImageView imageViewFotoContato;
-
-    private boolean isEmailValido(String email) {
-        String regex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
-        return email != null && email.matches(regex);
-    }
+    private ImageView imageViewFotoCadastro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +43,16 @@ public class Cadastro extends AppCompatActivity {
         Lista.getInstance().limpar();
 
         Button btnSelecionarFoto = findViewById(R.id.btnSelecionarFoto);
-        imageViewFotoContato = findViewById(R.id.imageViewFotoContato);
+        imageViewFotoCadastro = findViewById(R.id.imageViewFotoCadastro);
         Button btnCadastrar = findViewById(R.id.btnCadastrar);
         EditText editTextNome = findViewById(R.id.editTextNomeCompleto);
-        EditText editTextSenha = findViewById(R.id.editTextTextPassword);
-        EditText editTextTelefone = findViewById(R.id.editTextTelefoneContato);
+        EditText editTextSenha = findViewById(R.id.editTextPassword);
+        EditText editTextTelefone = findViewById(R.id.editTextCelular);
         Spinner spinnerPais = findViewById(R.id.spinPais);
-        EditText editTextEmail = findViewById(R.id.editTextTextEmailAddress);
+        EditText editTextEmail = findViewById(R.id.editTextEmailAddress);
         ImageButton btnVoltar = findViewById(R.id.btnVoltar);
+
+        Glide.with(this).load(R.drawable.foto_de_perfil).circleCrop().placeholder(R.drawable.foto_de_perfil).into(imageViewFotoCadastro);
 
         btnSelecionarFoto.setOnClickListener(v -> {
             String[] options = {"Galeria", "Câmera"};
@@ -80,8 +78,8 @@ public class Cadastro extends AppCompatActivity {
             String email = editTextEmail.getText().toString().trim();
             String pais = (spinnerPais.getSelectedItem() != null) ? spinnerPais.getSelectedItem().toString().trim() : "";
 
-            Drawable drawable = imageViewFotoContato.getDrawable();
-            @SuppressLint("UseCompatLoadingForDrawables") boolean imagemValida = imageViewFotoContato.getTag() != null &&
+            Drawable drawable = imageViewFotoCadastro.getDrawable();
+            @SuppressLint("UseCompatLoadingForDrawables") boolean imagemValida = imageViewFotoCadastro.getTag() != null &&
                     !((BitmapDrawable) drawable).getBitmap().sameAs(
                             ((BitmapDrawable) getResources().getDrawable(R.drawable.foto_de_perfil)).getBitmap()
                     );
@@ -106,10 +104,10 @@ public class Cadastro extends AppCompatActivity {
 
             SharedPreferences prefs = getSharedPreferences("usuarioLogado", MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
+
             editor.putInt("usuarioId", usuarioId);
             editor.putString("fotoUsuario", imageViewPath); // salva o caminho da imagem
             editor.apply();
-
 
             Lista.getInstance().limpar();
 
@@ -120,7 +118,12 @@ public class Cadastro extends AppCompatActivity {
             finish();
         });
 
-        btnVoltar.setOnClickListener(v -> finish());
+        btnVoltar.setOnClickListener(v -> startActivity(new Intent(Cadastro.this, Login.class)));
+    }
+
+    private boolean isEmailValido(String email) {
+        String regex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        return email != null && email.matches(regex);
     }
 
     private String salvarImagemEmArquivo(Bitmap bitmap, String nomeArquivo) {
@@ -144,12 +147,24 @@ public class Cadastro extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == PICK_IMAGE_REQUEST && data != null && data.getData() != null) {
-                imageViewFotoContato.setImageURI(data.getData());
-                imageViewFotoContato.setTag("imagem_selecionada");
+                Uri selectedImage = data.getData();
+                imageViewFotoCadastro.setImageURI(data.getData());
+                imageViewFotoCadastro.setTag("imagem_selecionada");
+                Glide.with(this)
+                        .load(selectedImage)
+                        .circleCrop()
+                        .placeholder(R.drawable.foto_de_perfil)
+                        .into(imageViewFotoCadastro);
+
             } else if (requestCode == CAMERA_REQUEST && data != null && data.getExtras() != null) {
                 Bitmap foto = (Bitmap) data.getExtras().get("data");
-                imageViewFotoContato.setImageBitmap(foto);
-                imageViewFotoContato.setTag("imagem_selecionada");
+                imageViewFotoCadastro.setImageBitmap(foto);
+                imageViewFotoCadastro.setTag("imagem_selecionada");
+                Glide.with(this)
+                        .load(foto)
+                        .circleCrop()
+                        .placeholder(R.drawable.foto_de_perfil)
+                        .into(imageViewFotoCadastro);
             }
         }
     }

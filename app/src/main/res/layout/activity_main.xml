@@ -28,11 +28,11 @@
                 android:layout_height="64dp"
                 android:layout_gravity="end"
                 android:background="@drawable/foto_borda"
-                android:contentDescription="Abrir menu"
+                android:contentDescription="@string/abrir_menu"
                 android:padding="4dp"
                 android:scaleType="centerCrop"
                 app:tint="@null"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,ImageContrastCheck" />
 
             <!-- Logo -->
             <ImageView
@@ -63,8 +63,9 @@
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/colorBlue"
                 android:text="@string/adicionar_contato"
-                android:textColor="@android:color/white"
-                app:cornerRadius="12dp" />
+                android:textColor="#1B5E20"
+                app:cornerRadius="12dp"
+                tools:ignore="VisualLintButtonSize" />
 
             <!-- Botão Ver Lista -->
             <com.google.android.material.button.MaterialButton
@@ -73,8 +74,9 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorBlue"
                 android:text="@string/ver_lista_de_contatos"
-                android:textColor="@android:color/white"
-                app:cornerRadius="12dp" />
+                android:textColor="#1B5E20"
+                app:cornerRadius="12dp"
+                tools:ignore="VisualLintButtonSize" />
 
         </LinearLayout>
     </ScrollView>
@@ -87,5 +89,6 @@
         android:layout_gravity="start"
         android:background="@android:color/white"
         app:headerLayout="@layout/header_menu"
-        app:menu="@menu/menu_lateral" />
+        app:menu="@menu/menu_lateral"
+        tools:ignore="VisualLintBounds" />
 </androidx.drawerlayout.widget.DrawerLayout>

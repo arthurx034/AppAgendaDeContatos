@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AgendaDeContatos</string>
+    <string name="app_name">Contact Agenda</string>
     <string name="adicionar_pessoa" />
     <string name="novo_contato">Novo Contato</string>
     <string name="agenda_de_contatos">Agenda de Contatos</string>
@@ -14,7 +14,6 @@
     <string name="cadastro">Cadastro</string>
     <string name="foto_do_contato">Foto do contato</string>
     <string name="selecionar_foto">Selecionar Foto</string>
-    <string name="nome_completo">Nome Completo</string>
     <string name="pais">País</string>
     <string name="telefone_de_contato">Telefone de Contato</string>
     <string name="e_mail">E-mail</string>
@@ -43,4 +42,9 @@
     <string name="login_button">Login</string>
     <string name="cadastrar_button">Cadastrar</string>
     <string name="todo_adicionar_contato">TODO</string>
+    <string name="abrir_menu">Abrir menu</string>
+    <string name="nome_completo_cadastro">Nome Completo</string>
+    <string name="logout">logout</string>
+    <string name="perfil">perfil</string>
+    <string name="settings">settings</string>
 </resources>

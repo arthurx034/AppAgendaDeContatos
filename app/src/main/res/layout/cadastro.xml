@@ -1,156 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fillViewport="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
+        <!-- Top Bar -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/topBar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/colorBlue"
             android:orientation="horizontal"
-            android:padding="18dp">
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
                 android:id="@+id/btnVoltar"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
+                android:layout_height="wrap_content"
                 android:background="@null"
                 android:contentDescription="@string/voltar"
                 app:srcCompat="@drawable/arrow_back_ios"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
+                app:tint="@android:color/white"
+                tools:ignore="TouchTargetSizeCheck,ImageContrastCheck" />
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="wrap_content"
+                android:layout_width="325dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="114dp"
                 android:text="@string/cadastro"
-                android:textColor="@color/black"
-                android:textSize="24sp"
+                android:textAlignment="center"
+                android:textColor="#546E7A"
+                android:textSize="22sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Card Container -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardContainer"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="18dp">
-
-            <ImageView
-                android:id="@+id/imageViewFotoContato"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginBottom="12dp"
-                android:contentDescription="@string/foto_do_contato"
-                android:scaleType="centerCrop"
-                android:src="@drawable/foto_de_perfil" />
-
-            <Button
-                android:id="@+id/btnSelecionarFoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorBlue"
-                android:text="@string/selecionar_foto"
-                android:textColor="@color/black" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/editTextNomeCompleto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/nome_completo"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:textColorHint="#546E7A"
-                tools:ignore="TouchTargetSizeCheck" />
+            android:layout_marginTop="8dp"
+            android:padding="13dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topBar">
 
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/textViewTelefone"
+                <!-- Foto -->
+                <ImageView
+                    android:id="@+id/imageViewFotoCadastro"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/foto_borda"
+                    android:contentDescription="@string/foto_do_contato"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/foto_de_perfil" />
+
+                <Button
+                    android:id="@+id/btnSelecionarFoto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/pais"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:backgroundTint="@color/colorBlue"
+                    android:text="@string/selecionar_foto"
+                    android:textColor="#1B5E20" />
 
-                <Spinner
-                    android:id="@+id/spinPais"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:entries="@array/lista_paises"
-                    tools:ignore="TouchTargetSizeCheck" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="@string/nome_completo_cadastro">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextNomeCompleto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:inputType="textPersonName"
+                        tools:ignore="VisualLintTextFieldSize" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- País -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/pais"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinPais"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:entries="@array/lista_paises"
+                        tools:ignore="TouchTargetSizeCheck" />
+                </LinearLayout>
+
+                <!-- Telefone -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/celular"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/colorBlue">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextCelular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:inputType="phone"
+                        android:textColorHint="#757575"
+                        tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Email -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="@string/e_mail_login">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextEmailAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        tools:ignore="VisualLintTextFieldSize" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Senha -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="@string/senha_login">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        tools:ignore="VisualLintTextFieldSize" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Botão Cadastrar -->
+                <Button
+                    android:id="@+id/btnCadastrar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="@color/colorBlue"
+                    android:text="@string/cadastrar"
+                    android:textColor="#1B5E20"
+                    tools:ignore="VisualLintButtonSize" />
+
             </LinearLayout>
-
-            <EditText
-                android:id="@+id/editTextTelefoneContato"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/telefone_de_contato"
-                android:importantForAutofill="no"
-                android:inputType="phone"
-                android:textColorHint="#546E7A"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <EditText
-                android:id="@+id/editTextTextEmailAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/e_mail"
-                android:importantForAutofill="no"
-                android:inputType="textEmailAddress"
-                android:textColorHint="#546E7A"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <EditText
-                android:id="@+id/editTextTextPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/senha"
-                android:importantForAutofill="no"
-                android:inputType="textPassword"
-                tools:ignore="TouchTargetSizeCheck" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnCadastrar"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:backgroundTint="@color/colorBlue"
-            android:text="@string/cadastrar"
-            android:textColor="@color/black" />
-
-    </LinearLayout>
-</androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -22,9 +22,7 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-    private ImageButton btnMenu;
     private NavigationView navigationView;
-    private ImageView imageViewFotoContato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Bind views
         drawerLayout = findViewById(R.id.drawerLayout);
-        btnMenu = findViewById(R.id.imageButtonFotoContato);
+        ImageButton btnMenu = findViewById(R.id.imageButtonFotoContato);
         navigationView = findViewById(R.id.navigationView);
         Button btnAdicionarContato = findViewById(R.id.btnAdicionarContato);
         Button btnListaContatos = findViewById(R.id.btnListaContatos);
@@ -49,13 +47,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnAdicionarContato.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, AdicionarContato.class));
-        });
+        btnAdicionarContato.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AdicionarContato.class)));
 
-        btnListaContatos.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, ListaContatos.class));
-        });
+        btnListaContatos.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ListaContatos.class)));
 
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -70,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void carregarFotoUsuario() {
-        imageViewFotoContato = findViewById(R.id.imageButtonFotoContato);
+        ImageView imageViewFotoContato = findViewById(R.id.imageButtonFotoContato);
 
         // Pega header do NavigationView e a imagem dele
         View headerView = navigationView.getHeaderView(0);
