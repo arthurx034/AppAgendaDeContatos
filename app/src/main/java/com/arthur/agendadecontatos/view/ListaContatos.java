@@ -27,6 +27,7 @@ public class ListaContatos extends AppCompatActivity {
     private final ArrayList<String> nomes = new ArrayList<>();
     private ArrayAdapter<String> adapter;
     private EditText editTextBuscar;
+    private com.google.android.material.textfield.TextInputLayout textInputLayoutBusca;
 
     private DBController_Agenda dbControllerContatos;
 
@@ -39,6 +40,7 @@ public class ListaContatos extends AppCompatActivity {
         ImageButton imagemBack = findViewById(R.id.imagemBack);
         ImageButton imagemSearch = findViewById(R.id.imagemSearch);
         editTextBuscar = findViewById(R.id.editTextBuscar);
+        textInputLayoutBusca = findViewById(R.id.textInputLayoutBusca);
         ListView listView = findViewById(R.id.listView);
         TextView textViewVoltar = findViewById(R.id.textViewVoltar);
 
@@ -58,13 +60,13 @@ public class ListaContatos extends AppCompatActivity {
         textViewVoltar.setOnClickListener(v -> finish());
 
         imagemSearch.setOnClickListener(v -> {
-            if (editTextBuscar.getVisibility() == View.VISIBLE) {
-                editTextBuscar.setVisibility(View.GONE);
+            if (textInputLayoutBusca.getVisibility() == View.VISIBLE) {
+                textInputLayoutBusca.setVisibility(View.GONE);
                 editTextBuscar.setText("");
                 adapter.getFilter().filter("");
             } else {
-                editTextBuscar.setVisibility(View.VISIBLE);
-                editTextBuscar.requestFocus();
+                textInputLayoutBusca.setVisibility(View.VISIBLE);
+                textInputLayoutBusca.requestFocus();
             }
         });
 
@@ -101,20 +103,37 @@ public class ListaContatos extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("usuarioLogado", MODE_PRIVATE);
         int usuarioId = prefs.getInt("usuarioId", -1);
 
+        // Verifica se nenhum usuário está logado
         if (usuarioId == -1) {
-            listaContatos.clear();
-            nomes.clear();
-            adapter.notifyDataSetChanged();
+            limparListaContatos();
             return;
         }
 
-        listaContatos = dbControllerContatos.listarContatosPorUsuario(usuarioId); // FILTRAR PELO ID DO USUÁRIO
+        // Recupera os contatos do banco filtrando pelo usuário
+        List<Contato> contatosDoUsuario = dbControllerContatos.listarContatosPorUsuario(usuarioId);
 
+        // Atualiza a lista principal e os nomes
+        atualizarListas(contatosDoUsuario);
+    }
+
+    // Método para limpar as listas e atualizar a interface
+    private void limparListaContatos() {
+        listaContatos.clear();
         nomes.clear();
-        for (Contato c : listaContatos) {
-            nomes.add(c.getNome() + " " + c.getSobrenome());
-        }
         adapter.notifyDataSetChanged();
     }
 
+    // Método para atualizar os dados exibidos com base na nova lista de contatos
+    private void atualizarListas(List<Contato> contatos) {
+        listaContatos.clear();
+        listaContatos.addAll(contatos);
+
+        nomes.clear();
+        for (Contato c : contatos) {
+            String nomeCompleto = (c.getNome() + " " + c.getSobrenome()).trim();
+            nomes.add(nomeCompleto);
+        }
+
+        adapter.notifyDataSetChanged();
+    }
 }
