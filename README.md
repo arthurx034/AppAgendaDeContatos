@@ -30,22 +30,16 @@ Este projeto é ideal para aprendizado de conceitos como:
 
 ---
 
-##  Estrutura Sugerida
+## 📂 Estrutura Sugerida
 
-AppAgendaDeContatos/
-
-├── app/ # Código-fonte do aplicativo
-
-│ ├── src/main/java/... # Packages de atividades e modelos (Activities, Adapters, Models, DB)
-
-│ └── src/main/res/... # Layouts, strings, cores, estilos
-
-├── build.gradle # Configuração do build do módulo App
-
-├── settings.gradle # Configuração do projeto
-
-└── README.md # Este documento
-
+| Caminho                         | Descrição                                                       |
+|---------------------------------|------------------------------------------------------------------|
+| `app/`                          | Pasta principal do código-fonte do aplicativo                   |
+| `app/src/main/java/...`         | Pacotes de atividades e modelos (Activities, Adapters, Models, DB) |
+| `app/src/main/res/...`          | Recursos visuais: layouts XML, strings, cores, estilos          |
+| `build.gradle`                  | Configuração do build do módulo App                             |
+| `settings.gradle`               | Configuração geral do projeto                                   |
+| `README.md`                     | Documentação do projeto                                         |
 
 ---
 
